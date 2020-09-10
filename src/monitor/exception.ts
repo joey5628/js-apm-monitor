@@ -28,6 +28,9 @@ export default class ExceptionMonitor {
         }
     }
 
+    /**
+     * JS运行时异常监控
+     */
     scriptWatcher(): void {
         const originOnError = window.onerror;
         const reporter = this.reporter;
@@ -42,7 +45,7 @@ export default class ExceptionMonitor {
             reporter.sendLog({
                 error_type: 'script',
                 error_level: 'error',
-                error_file: source,
+                error_url: source,
                 error_lineno: lineno,
                 error_colno: colno,
                 error_stack: error && error.stack,
@@ -54,13 +57,17 @@ export default class ExceptionMonitor {
         };
     }
 
+    /**
+     * 资源加载失败监控
+     */
     resourceWatcher(): void {
         window.addEventListener('error', (event) => {
             if (event) {
                 console.log('resourceWatcher event:', event);
                 const target = event.target || event.srcElement;
                 const isElementTarget = target instanceof HTMLScriptElement || target instanceof HTMLLinkElement || target instanceof HTMLImageElement;
-                if (!isElementTarget) return; // js error不再处理
+                // js error不再处理
+                if (!isElementTarget) return; 
                 
                 if (target) {
                     // @ts-ignore
@@ -68,7 +75,7 @@ export default class ExceptionMonitor {
                     this.reporter.sendLog({
                         error_type: 'resource',
                         error_level: 'error',
-                        error_file: url,
+                        error_url: url,
                         // @ts-ignore
                         error_msg: target.nodeName
                     });
@@ -77,6 +84,9 @@ export default class ExceptionMonitor {
         }, true);
     }
 
+    /**
+     * console.error 拦截监控
+     */
     consoleWatcher(): void {
         if (!window.console || !window.console.error) return;
         const originConsoleError = window.console.error;
@@ -90,7 +100,96 @@ export default class ExceptionMonitor {
         };
     }
 
+    /**
+     * 请求异常监控
+     */
     requestWatcher(): void {
-        console.log('requestWatcher');
+        if (!window.fetch) {
+            this.ajaxWatcher();
+        } else {
+            this.fetchWatcher();
+        }
+    }
+
+    /**
+     * fetch 异常监控
+     */
+    fetchWatcher(): void {
+        const originFetch = window.fetch;
+        const reporter = this.reporter;
+        window.fetch = function (input: RequestInfo, init: RequestInit | undefined): Promise<Response>{
+            const fetchReq: Promise<Response> = originFetch.call(window, input, init);
+            let url: string;
+            if (input instanceof Request) {
+                url = input.url;
+            } else { // 直接转一个URL 例如：fetch('http://example.com/movies.json')
+                url = input;
+            }
+            fetchReq.then(res => {
+                if (!res.ok) {
+                    reporter.sendLog({
+                        error_type: 'fetch',
+                        error_level: 'error',
+                        error_url: url,
+                        error_msg: JSON.stringify(res),
+                    });
+                }
+            }).catch(error => {
+                reporter.sendLog({
+                    error_type: 'fetch',
+                    error_level: 'error',
+                    error_url: url,
+                    error_msg: JSON.stringify(error.msg),
+                    error_stack: JSON.stringify(error.stack)
+                });
+                throw error;
+            });
+            return fetchReq;
+        };
+    }
+
+    /**
+     * ajax 异常监控
+     */
+    ajaxWatcher(): void {
+        if (!window.XMLHttpRequest) return;
+        const originXhr = window.XMLHttpRequest;
+        const originSend = originXhr.prototype.send;
+
+        const handleEvent = (event: Event): void => {
+            if (event) {
+                const currentTarget: XMLHttpRequest = event.currentTarget as XMLHttpRequest;
+                const target: XMLHttpRequest = event.target as XMLHttpRequest;
+                if (currentTarget && currentTarget.status !== 200) {
+                    this.reporter.sendLog({
+                        error_type: 'ajax',
+                        error_level: 'error',
+                        error_url: target.responseURL,
+                        error_msg: JSON.stringify({
+                            response: target.response,
+                            status: target.status,
+                            statusText: target.statusText
+                        })
+                    });
+                }
+            }
+        };
+
+        originXhr.prototype.send = function(...args) {
+            if (!this.addEventListener) {
+                this.addEventListener('error', handleEvent);
+                this.addEventListener('load', handleEvent);
+                this.addEventListener('abort', handleEvent);
+            } else {
+                const originStateChange = this.onreadystatechange;
+                this.onreadystatechange = function(event): void {
+                    if (this.readyState === 4) {
+                        handleEvent(event);
+                    }
+                    originStateChange && originStateChange.call(this, event);
+                };
+            }
+            return originSend.apply(this, args);
+        };
     }
 }
