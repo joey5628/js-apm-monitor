@@ -1,0 +1,11 @@
+# project.config.json
+.DS_Store
+/node_modules
+yarn.lock
+yarn-error.log
+.vscode
+dist/
+.idea/
+package-lock.json
+.history
+temp/

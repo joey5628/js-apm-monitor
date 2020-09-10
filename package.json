@@ -1,0 +1,62 @@
+{
+    "name": "js-apm-monitor",
+    "version": "0.0.1",
+    "description": "Web App performance and exception monitor",
+    "main": "lib/index.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "keywords": [
+        "JavaScript",
+        "Performance",
+        "Exception",
+        "Monitor",
+        "H5",
+        "WebApp"
+    ],
+    "author": "joey",
+    "license": "ISC",
+    "devDependencies": {
+        "@commitlint/cli": "^9.1.2",
+        "@commitlint/config-conventional": "^9.1.2",
+        "@types/jest": "^26.0.12",
+        "@typescript-eslint/eslint-plugin": "^4.0.1",
+        "@typescript-eslint/parser": "^4.0.1",
+        "cross-env": "^7.0.2",
+        "eslint": "^7.8.1",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "husky": "^4.2.5",
+        "jest": "^26.4.2",
+        "prettier": "^2.1.1",
+        "ts-jest": "^26.3.0",
+        "typescript": "^4.0.2"
+    },
+    "lint-staged": {
+		"*.{js,ts}": [
+			"eslint --fix",
+			"git add"
+		]
+	},
+    "husky": {
+		"hooks": {
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+			"pre-commit": "lint-staged"
+		}
+    },
+    "jest": {
+        "moduleFileExtensions": [
+            "js",
+            "json",
+            "ts"
+        ],
+        "rootDir": "__test__",
+        "testRegex": ".spec.ts$",
+        "transform": {
+            "^.+\\.(t|j)s$": "ts-jest"
+        },
+        "coverageDirectory": "../coverage",
+        "testEnvironment": "jsdom"
+    }
+}
