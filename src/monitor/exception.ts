@@ -55,6 +55,17 @@ export default class ExceptionMonitor {
                 originOnError.apply(window, [message, source, lineno, colno, error]);
             }
         };
+
+        window.addEventListener('unhandledrejection', function (event) {
+            if (event) {
+                const reason = event.reason;
+                reporter.sendLog({
+                    error_type: 'unhandledrejection',
+                    error_level: 'error',
+                    error_msg: reason
+                });
+            }
+        }, true);
     }
 
     /**
