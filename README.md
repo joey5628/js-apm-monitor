@@ -173,6 +173,9 @@ ajaxWatcher(): void {
 
 至此异常的监控就已完成。
 
+TODO
+- [ ] React 和 Vue 异常监控
+- [ ] iframe 的异常监控
 
 
 

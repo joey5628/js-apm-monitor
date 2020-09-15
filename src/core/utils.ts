@@ -1,9 +1,6 @@
 /**
  * 是否支持fetch方法
  */
-export function isSupportFetch(): boolean {
-    return !!window.fetch;
-}
 
 export function isFunction(what: unknown): boolean {
     return typeof what === 'function';

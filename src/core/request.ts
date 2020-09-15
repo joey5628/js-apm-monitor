@@ -1,20 +1,10 @@
-import { isSupportFetch } from './utils';
 
 class Request {
 
     static instance: Request | null;
 
     post(url: string, data: unknown): Promise<any> {
-        if (isSupportFetch()) {
-            return fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                }),
-                mode: 'cors'
-            });
-        } else {
+        if (!window.fetch) {
             return new Promise((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
 
@@ -33,6 +23,15 @@ class Request {
                 xhr.open('POST', url);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify(data));
+            });
+        } else {
+            return fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: new Headers({
+                    'Content-Type': 'application/json'
+                }),
+                mode: 'cors'
             });
         }
     }
