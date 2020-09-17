@@ -37,7 +37,7 @@ window.onerror = function (message, source, lineno, colno, error): void {
 如何解决脚本的跨域报错问题？
 * 所有的资源统一在一个域名下
 * 在脚本文件的 HTTP response header 中设置CORS。
-> 讲脚本文件请求的Access-Control-Allow-Origin设置为”*”或者需要支持的域名
+> 将脚本文件请求的Access-Control-Allow-Origin设置为”*”或者需要支持的域名
 ```code
 header('Access-Control-Allow-Origin: *');
 ```

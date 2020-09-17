@@ -12,11 +12,9 @@ class Request {
                     if (xhr.readyState !== 4) {
                         return;
                     }
-    
                     if (xhr.status === 200) {
                         resolve(xhr);
                     }
-    
                     reject(xhr);
                 };
     

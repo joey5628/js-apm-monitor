@@ -1,7 +1,8 @@
 module.exports = {
     env: {
         browser: true,
-        es6: true
+        es6: true,
+        node: true
     },
     parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint'],
@@ -15,8 +16,15 @@ module.exports = {
     parserOptions: {
         'ecmaVersion': 2018,
         'sourceType': 'module',
-        // 'project': './tsconfig.json'
     },
+    // overrides: [
+    //     {
+    //         files: ['*.js', '*.jsx'],
+    //         rules: {
+    //             '@typescript-eslint/*': 'off',
+    //         }
+    //     }
+    // ],
     rules: {
         'no-console': 'off',
         'no-trailing-spaces': 'off',
