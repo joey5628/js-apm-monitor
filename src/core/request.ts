@@ -1,4 +1,6 @@
 
+const originFetch = window.fetch;
+const originXhr = XMLHttpRequest;
 class Request {
 
     static instance: Request | null;
@@ -6,7 +8,7 @@ class Request {
     post(url: string, data: unknown): Promise<any> {
         if (!window.fetch) {
             return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
+                const xhr = new originXhr();
 
                 xhr.onreadystatechange = (): void => {
                     if (xhr.readyState !== 4) {
@@ -23,7 +25,7 @@ class Request {
                 xhr.send(JSON.stringify(data));
             });
         } else {
-            return fetch(url, {
+            return originFetch(url, {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: new Headers({

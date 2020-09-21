@@ -1,7 +1,7 @@
 /*
  * @Author: Joey
  * @Date: 2020-09-03 10:59:02
- * @LastEditTime: 2020-09-09 15:47:11
+ * @LastEditTime: 2020-09-21 17:27:42
  * @Description: 
  * @FilePath: /js-apm-monitor/src/core/reporter.ts
  */
@@ -56,6 +56,7 @@ class Reporter {
     }
 
     public sendLog(params: LogData | LogData[]): Promise<any> {
+        console.log('sendLog params:', params);
         if (params && !isArray(params)) {
             params = [params as LogData];
         }
@@ -63,8 +64,8 @@ class Reporter {
             .then(() => {
                 return storage.remove(this.options.logStorageKey);
             })
-            .catch((e: Event) => {
-                console.error('upload log error', e);
+            .catch((error: any) => {
+                console.log('upload log error:', error);
             });
     }
 

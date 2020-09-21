@@ -39,6 +39,14 @@ export default class PerformanceMonitor {
         const scriptInfo = this.getResourceInfo('script');
         const styleInfo = this.getResourceInfo('style');
         const imgInfo = this.getResourceInfo('img');
+
+        // console.log('reportPerformance:', {
+        //     ...performanceTimes,
+        //     ...scriptInfo,
+        //     ...styleInfo,
+        //     ...imgInfo
+        // });
+
         this.reporter.sendLog({
             ...performanceTimes,
             ...scriptInfo,

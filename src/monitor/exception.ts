@@ -35,7 +35,6 @@ export default class ExceptionMonitor {
         const originOnError = window.onerror;
         const reporter = this.reporter;
         window.onerror = function (message, source, lineno, colno, error): void {
-            console.log('scriptWatcher args:', [message, source, lineno, colno, error]);
             let msg = '';
             if (error && error.stack) {
                 msg = error.stack;
@@ -124,6 +123,7 @@ export default class ExceptionMonitor {
 
     /**
      * fetch 异常监控
+     * 
      */
     fetchWatcher(): void {
         const originFetch = window.fetch;
