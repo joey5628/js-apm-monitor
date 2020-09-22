@@ -10,3 +10,4 @@ package-lock.json
 .history
 temp/
 example/public/js-apm-monitor.dev.js
+example/log.txt

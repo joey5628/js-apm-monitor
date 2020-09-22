@@ -34,6 +34,16 @@ export default class PerformanceMonitor {
         });
     }
 
+    timeToFixed(performanceInfo: Record<string, number | undefined>): any {
+        Object.keys(performanceInfo).forEach((key) => {
+            const time = performanceInfo[key];
+            if (time) {
+                performanceInfo[key] = parseFloat(time.toFixed(2));
+            }
+        });
+        return performanceInfo;
+    }   
+
     reportPerformance(): void {
         const performanceTimes = this.getPerformanceTimes();
         const scriptInfo = this.getResourceInfo('script');
@@ -47,12 +57,12 @@ export default class PerformanceMonitor {
         //     ...imgInfo
         // });
 
-        this.reporter.sendLog({
+        this.reporter.sendLog(this.timeToFixed({
             ...performanceTimes,
             ...scriptInfo,
             ...styleInfo,
             ...imgInfo
-        }).finally(() => {
+        })).finally(() => {
             this.isReported = true;
         });
     }

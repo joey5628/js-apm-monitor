@@ -114,11 +114,8 @@ export default class ExceptionMonitor {
      * 请求异常监控
      */
     requestWatcher(): void {
-        if (!window.fetch) {
-            this.ajaxWatcher();
-        } else {
-            this.fetchWatcher();
-        }
+        this.ajaxWatcher();
+        this.fetchWatcher();
     }
 
     /**
@@ -126,6 +123,7 @@ export default class ExceptionMonitor {
      * 
      */
     fetchWatcher(): void {
+        if (!window.fetch) return;
         const originFetch = window.fetch;
         const reporter = this.reporter;
         window.fetch = function (input: RequestInfo, init: RequestInit | undefined): Promise<Response>{

@@ -1,3 +1,9 @@
 h1 {
     color: red;
 }
+.btn {
+    width: 120px;
+    height: 30px;
+    line-height: 1;
+    cursor: pointer;
+}
