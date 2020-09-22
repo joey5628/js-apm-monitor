@@ -2,11 +2,12 @@
     "name": "js-apm-monitor",
     "version": "0.0.1",
     "description": "Web App performance and exception monitor",
-    "main": "lib/index.js",
+    "main": "lib/js-apm-monitor.js",
     "scripts": {
         "test": "jest",
         "start": "npm run dev && nodemon example/app.js",
-        "dev": "webpack --config build/webpack.dev.js "
+        "dev": "webpack --config build/webpack.dev.js ",
+        "build": "webpack --config build/webpack.prod.js"
     },
     "keywords": [
         "JavaScript",

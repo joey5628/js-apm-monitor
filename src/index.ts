@@ -5,12 +5,12 @@ import PerformanceMonitor from './monitor/performance';
 
 class ApmMonitor {
     
-    private reporter: Reporter | null;
+    private reporter: Reporter;
     private exceptionMonitor: ExceptionMonitor | null;
     private performanceMonitor: PerformanceMonitor | null;
 
     constructor() {
-        this.reporter = null;
+        this.reporter = new Reporter();
         this.exceptionMonitor = null;
         this.performanceMonitor = null;
     }
@@ -18,11 +18,11 @@ class ApmMonitor {
     init(options: Options): void {
         if (options && options.url) {
             options = this.optionsMerge(options);
-            this.reporter = new Reporter(options);
+            this.reporter.init(options);
             this.exceptionMonitor = new ExceptionMonitor(options, this.reporter);
             this.performanceMonitor = new PerformanceMonitor(options, this.reporter);
             this.exceptionMonitor.watch();
-            this.performanceMonitor.watch();   
+            this.performanceMonitor.watch();
         }
     }
 

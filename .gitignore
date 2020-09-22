@@ -11,3 +11,4 @@ package-lock.json
 temp/
 example/public/js-apm-monitor.dev.js
 example/log.txt
+lib/

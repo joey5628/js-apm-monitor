@@ -6,13 +6,13 @@ export default class PerformanceMonitor {
     private delay: number;
     public options:Options;
     public reporter: Reporter;
-    private isReported: boolean;
+    // private isReported: boolean;
 
     constructor(options: Options, reporter: Reporter) {
         this.options = options;
         this.reporter = reporter;
         this.delay = 2000;
-        this.isReported = false;
+        // this.isReported = false;
     }
 
     watch(): void {
@@ -23,7 +23,7 @@ export default class PerformanceMonitor {
                 if (typeof window.requestIdleCallback === 'function') {
                     // @ts-ignore
                     window.requestIdleCallback((deadline: any) => {
-                        if ((deadline.timeRemaining() > 0 || deadline.didTimeout) && !this.isReported) {
+                        if (deadline.timeRemaining() > 0 || deadline.didTimeout) {
                             this.reportPerformance();
                         }
                     }, { timeout: this.delay });
@@ -50,20 +50,13 @@ export default class PerformanceMonitor {
         const styleInfo = this.getResourceInfo('style');
         const imgInfo = this.getResourceInfo('img');
 
-        // console.log('reportPerformance:', {
-        //     ...performanceTimes,
-        //     ...scriptInfo,
-        //     ...styleInfo,
-        //     ...imgInfo
-        // });
-
         this.reporter.sendLog(this.timeToFixed({
             ...performanceTimes,
             ...scriptInfo,
             ...styleInfo,
             ...imgInfo
         })).finally(() => {
-            this.isReported = true;
+            // this.isReported = true;
         });
     }
 
