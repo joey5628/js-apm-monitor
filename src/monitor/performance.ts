@@ -50,14 +50,18 @@ export default class PerformanceMonitor {
         const styleInfo = this.getResourceInfo('style');
         const imgInfo = this.getResourceInfo('img');
 
-        this.reporter.sendLog(this.timeToFixed({
+        const info = this.timeToFixed({
             ...performanceTimes,
             ...scriptInfo,
             ...styleInfo,
             ...imgInfo
-        })).finally(() => {
-            // this.isReported = true;
         });
+        info.log_type = 'performance';
+
+        this.reporter.sendLog(info);
+        // .finally(() => {
+        //     // this.isReported = true;
+        // });
     }
 
     getPerformanceTimes(): PerformanceTimes | null {

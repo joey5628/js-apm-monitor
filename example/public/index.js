@@ -2,6 +2,9 @@ var apmMonitor = window.apmMonitor.default;
 // apmMonitor.reporter.sendLog = function(log) {
 //     console.log('new sendLog222:', log)
 // }
+apmMonitor.customReporter((log) => {
+    console.log('new sendLog3:', log)
+})
 apmMonitor.init({
     url: 'http://localhost:3000/log'
 });

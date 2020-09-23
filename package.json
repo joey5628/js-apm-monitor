@@ -1,6 +1,6 @@
 {
     "name": "js-apm-monitor",
-    "version": "1.0.0-alpha.1",
+    "version": "1.0.0-alpha.2",
     "description": "Web App performance and exception monitor",
     "main": "lib/js-apm-monitor.js",
     "scripts": {

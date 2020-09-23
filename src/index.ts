@@ -1,4 +1,4 @@
-import { Options } from './core/types';
+import { Options, LogData } from './core/types';
 import Reporter from './core/reporter';
 import ExceptionMonitor from './monitor/exception';
 import PerformanceMonitor from './monitor/performance';
@@ -23,6 +23,12 @@ class ApmMonitor {
             this.performanceMonitor = new PerformanceMonitor(options, this.reporter);
             this.exceptionMonitor.watch();
             this.performanceMonitor.watch();
+        }
+    }
+
+    customReporter(fn: (log: LogData) => any): void {
+        if (fn && typeof fn === 'function') {
+            this.reporter.sendLog = fn;
         }
     }
 
