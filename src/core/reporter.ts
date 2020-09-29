@@ -1,7 +1,7 @@
 /*
  * @Author: Joey
  * @Date: 2020-09-03 10:59:02
- * @LastEditTime: 2020-09-22 18:09:14
+ * @LastEditTime: 2020-09-29 14:49:44
  * @Description: 
  * @FilePath: /js-apm-monitor/src/core/reporter.ts
  */
@@ -37,7 +37,7 @@ class Reporter {
     }
 
     private processLog(params: LogData): Promise<any> {
-        const { logStorageKey, maxStorageSize } = this.options as Options;
+        const { logStorageKey = '', maxStorageSize = 6000} = this.options as Options;
 
         return storage.get(logStorageKey)
             .then((currentData: LogData[]) => {
@@ -61,10 +61,11 @@ class Reporter {
 
     public sendLog(params: LogData | LogData[]): Promise<any> {
         const options = this.options as Options;
+        const url = options.url || '';
         if (params && !isArray(params)) {
             params = [params as LogData];
         }
-        return request.post(options.url, params)
+        return request.post(url, params)
             .then(() => {
                 return storage.remove(options.logStorageKey);
             })

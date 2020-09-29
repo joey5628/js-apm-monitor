@@ -15,15 +15,14 @@ class ApmMonitor {
         this.performanceMonitor = null;
     }
 
-    init(options: Options): void {
-        if (options && options.url) {
-            options = this.optionsMerge(options);
-            this.reporter.init(options);
-            this.exceptionMonitor = new ExceptionMonitor(options, this.reporter);
-            this.performanceMonitor = new PerformanceMonitor(options, this.reporter);
-            this.exceptionMonitor.watch();
-            this.performanceMonitor.watch();
-        }
+    init(options: Options): ApmMonitor {
+        options = this.optionsMerge(options);
+        this.reporter.init(options);
+        this.exceptionMonitor = new ExceptionMonitor(options, this.reporter);
+        this.performanceMonitor = new PerformanceMonitor(options, this.reporter);
+        this.exceptionMonitor.watch();
+        this.performanceMonitor.watch();
+        return this;
     }
 
     customReporter(fn: (log: LogData) => any): void {
@@ -33,6 +32,7 @@ class ApmMonitor {
     }
 
     private optionsMerge(options: Options): Options {
+        options = options || {};
         const defaultOptions = {
             logStorageKey: 'APM_MONITOR_LOG',
             maxStorageSize: 6000,
