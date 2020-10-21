@@ -77,9 +77,9 @@ apmMonitor.customReporter((log) => {
 |load_time|页面完全加载时间|参考价值不大，部分图片可能加载很慢|
 |资源加载性能|
 |script_count|JS资源数量||
-|script_load_time|所有JS加载耗时||
+|script_load_time|所有JS加载耗时|从第一个JS加载开始到最后一个JS加载完成之间的耗时|
 |style_count|样式资源数量||
-|style_load_time|所有样式加载耗时||
+|style_load_time|所有样式加载耗时|从第一个style加载开始到最后一个style加载完成之间的耗时|
 |img_count|图片资源数量||
 |img_load_time|所有图片加载耗时||
 

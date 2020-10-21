@@ -42,6 +42,7 @@ export default class ExceptionMonitor {
                 msg = message;
             }
             reporter.sendLog({
+                log_id: +new Date(),
                 log_type: 'exception',
                 error_type: 'script',
                 error_level: 'error',
@@ -60,6 +61,7 @@ export default class ExceptionMonitor {
             if (event) {
                 const reason = event.reason;
                 reporter.sendLog({
+                    log_id: +new Date(),
                     log_type: 'exception',
                     error_type: 'unhandledrejection',
                     error_level: 'error',
@@ -84,6 +86,7 @@ export default class ExceptionMonitor {
                     // @ts-ignore
                     const url = (target.src || target.href) || '';
                     this.reporter.sendLog({
+                        log_id: +new Date(),
                         log_type: 'exception',
                         error_type: 'resource',
                         error_level: 'error',
@@ -104,6 +107,7 @@ export default class ExceptionMonitor {
         const originConsoleError = window.console.error;
         window.console.error = (...args: []): void => {
             this.reporter.sendLog({
+                log_id: +new Date(),
                 log_type: 'exception',
                 error_type: 'consoleError',
                 error_level: 'error',
@@ -140,6 +144,7 @@ export default class ExceptionMonitor {
             fetchReq.then(res => {
                 if (!res.ok) {
                     reporter.sendLog({
+                        log_id: +new Date(),
                         log_type: 'exception',
                         error_type: 'fetch',
                         error_level: 'error',
@@ -149,6 +154,7 @@ export default class ExceptionMonitor {
                 }
             }).catch(error => {
                 reporter.sendLog({
+                    log_id: +new Date(),
                     log_type: 'exception',
                     error_type: 'fetch',
                     error_level: 'error',
@@ -176,6 +182,7 @@ export default class ExceptionMonitor {
                 const target: XMLHttpRequest = event.target as XMLHttpRequest;
                 if (currentTarget && currentTarget.status !== 200) {
                     this.reporter.sendLog({
+                        log_id: +new Date(),
                         log_type: 'exception',
                         error_type: 'ajax',
                         error_level: 'error',

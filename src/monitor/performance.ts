@@ -57,6 +57,7 @@ export default class PerformanceMonitor {
             ...imgInfo
         });
         info.log_type = 'performance';
+        info.log_id = +new Date();
 
         this.reporter.sendLog(info);
         // .finally(() => {
