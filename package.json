@@ -1,98 +1,84 @@
 {
-    "name": "js-apm-monitor",
-    "version": "1.0.0-alpha.5",
-    "description": "Web App performance and exception monitor",
-    "main": "lib/js-apm-monitor.js",
-    "scripts": {
-        "test": "jest",
-        "start": "npm run dev && nodemon example/app.js",
-        "dev": "webpack --config build/webpack.dev.js ",
-        "build": "webpack --config build/webpack.prod.js",
-        "prepublish": "npm run build"
-    },
-    "keywords": [
-        "JavaScript",
-        "Performance",
-        "Exception",
-        "Monitor",
-        "H5",
-        "WebApp"
-    ],
-    "directories": {
-        "lib": "lib",
-        "test": "__tests__"
-    },
-    "files": [
-        "lib"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:joey5628/js-apm-monitor.git"
-    },
-    "homepage": "https://github.com/joey5628/js-apm-monitor",
-    "bugs": {
-        "url": "https://github.com/joey5628/js-apm-monitor/issues"
-    },
-    "author": "joey",
-    "license": "ISC",
-    "devDependencies": {
-        "@babel/cli": "^7.11.6",
-        "@babel/core": "^7.11.6",
-        "@babel/plugin-transform-runtime": "^7.11.5",
-        "@babel/preset-env": "^7.11.5",
-        "@babel/types": "^7.11.5",
-        "@commitlint/cli": "^9.1.2",
-        "@commitlint/config-conventional": "^9.1.2",
-        "@types/jest": "^26.0.12",
-        "@typescript-eslint/eslint-plugin": "^4.0.1",
-        "@typescript-eslint/parser": "^4.0.1",
-        "awesome-typescript-loader": "^5.2.1",
-        "babel-loader": "^8.1.0",
-        "body-parser": "^1.19.0",
-        "cross-env": "^7.0.2",
-        "eslint": "^7.8.1",
-        "eslint-config-prettier": "^6.11.0",
-        "eslint-plugin-import": "^2.22.0",
-        "eslint-plugin-prettier": "^3.1.4",
-        "express": "^4.17.1",
-        "husky": "^4.2.5",
-        "jest": "^26.4.2",
-        "nodemon": "^2.0.4",
-        "prettier": "^2.1.1",
-        "ts-jest": "^26.3.0",
-        "typescript": "^4.0.2",
-        "uglifyjs-webpack-plugin": "^2.2.0",
-        "webpack": "^4.44.1",
-        "webpack-cli": "^3.3.12",
-        "webpack-merge": "^5.1.4"
-    },
-    "lint-staged": {
-        "*.{js,ts}": [
-            "eslint --fix",
-            "git add"
-        ]
-    },
-    "husky": {
-        "hooks": {
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-            "pre-commit": "lint-staged"
-        }
-    },
-    "jest": {
-        "moduleFileExtensions": [
-            "js",
-            "json",
-            "ts"
-        ],
-        "rootDir": "__test__",
-        "testRegex": ".spec.ts$",
-        "transform": {
-            "^.+\\.(t|j)s$": "ts-jest"
-        },
-        "coverageDirectory": "../coverage",
-        "testEnvironment": "jsdom"
-    },
-    "dependencies": {
-        "@babel/runtime": "^7.11.2"
+  "name": "js-apm-monitor",
+  "version": "1.0.0-alpha.5",
+  "description": "Web App performance and exception monitor",
+  "main": "lib/js-apm-monitor.js",
+  "scripts": {
+    "test": "jest",
+    "start": "npm run dev && nodemon example/app.js",
+    "dev": "webpack --config build/webpack.dev.js ",
+    "build": "webpack --config build/webpack.prod.js",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "JavaScript",
+    "Performance",
+    "Exception",
+    "Monitor",
+    "H5",
+    "WebApp"
+  ],
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:joey5628/js-apm-monitor.git"
+  },
+  "homepage": "https://github.com/joey5628/js-apm-monitor",
+  "bugs": {
+    "url": "https://github.com/joey5628/js-apm-monitor/issues"
+  },
+  "author": "joey",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/types": "^7.11.5",
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^9.1.2",
+    "@types/jest": "^26.0.12",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.1.0",
+    "body-parser": "^1.19.0",
+    "cross-env": "^7.0.2",
+    "eslint": "^7.8.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "express": "^4.17.1",
+    "husky": "^4.2.5",
+    "jest": "^26.6.1",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.1.1",
+    "ts-jest": "^26.3.0",
+    "typescript": "^4.0.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-merge": "^5.1.4"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
     }
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.11.2"
+  }
 }

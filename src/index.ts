@@ -1,7 +1,8 @@
-import { Options, LogData } from './core/types';
+import { Options, LogData, ClientInfo } from './core/types';
 import Reporter from './core/reporter';
 import ExceptionMonitor from './monitor/exception';
 import PerformanceMonitor from './monitor/performance';
+import getClientInstance from './core/clientInstance';
 
 class ApmMonitor {
     
@@ -15,7 +16,7 @@ class ApmMonitor {
         this.performanceMonitor = null;
     }
 
-    init(options: Options): ApmMonitor {
+    public init(options: Options): ApmMonitor {
         options = this.optionsMerge(options);
         this.reporter.init(options);
         this.exceptionMonitor = new ExceptionMonitor(options, this.reporter);
@@ -25,9 +26,19 @@ class ApmMonitor {
         return this;
     }
 
-    customReporter(fn: (log: LogData) => any): void {
+    public getClientInfo(): ClientInfo {
+        return getClientInstance().getClientInfo();
+    }
+
+    public customReporter(fn: (log: LogData) => any): void {
         if (fn && typeof fn === 'function') {
-            this.reporter.sendLog = fn;
+            // this.reporter.sendLog = fn;
+            this.reporter.sendLog = (params): any => {
+                params = params || {};
+                const clientInfo = this.getClientInfo();
+                params = Object.assign(clientInfo, params);
+                fn(params as LogData);
+            };
         }
     }
 

@@ -16,9 +16,28 @@
     <button class="btn" onclick="scriptError()">JS脚本错误</button>
     <button class="btn" onclick="resourceError()">资源加载错误</button>
     <button class="btn" onclick="xhrError()">XHR请求错误</button>
-    <button class="btn" onclick="fetchError()">Fetch请求错误</button>
+    <button class="btn" onclick="fetchError">Fetch请求错误</button>
     <button class="btn" onclick="promiseError()">Promise异常</button>
+    <br>
+    <div>
+        原始UA：<span id="originUserAgent"></span>
+    </div>
+    <br>
+    <br>
+    <div class="client-info">
+        <p>UserAgent：<span id="userAgent"></span></p>
+        <p>系统：<span id="clientOS"></span></p>
+        <p>系统版本：<span id="clientOSVersion"></span></p>
+        <p>浏览器：<span id="browser"></span></p>
+        <p>浏览器版本：<span id="browserVersion"></span></p>
+    </div>
 </body>
 <script src="./js-apm-monitor.dev.js"></script>
 <script src="./index.js"></script>
+<!-- <script>
+    window.onload = function() {
+        alert(JSON.stringify(window.navigator.userAgent))
+        document.getElementById('originUserAgent').innerText = JSON.stringify(window.navigator.userAgent);
+    }
+</script> -->
 </html>

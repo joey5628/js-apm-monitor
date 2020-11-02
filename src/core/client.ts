@@ -7,43 +7,43 @@ interface VersionMap {
 class Client {
 
     static instance: Client | null;
-    private ua: string;
+    public ua: string;
     private os: { [key: string]: boolean };
     private browser: { [key: string]: boolean };
 
-    constructor() {
-        const ua = window.navigator ? window.navigator.userAgent : '';
+    constructor(testUa?: string) {
+        const ua = testUa || (window.navigator ? window.navigator.userAgent : '');
         this.ua = ua;
 
         this.os = {
             'iOS': ua.indexOf('like Mac OS X') > -1,
-            'Android': ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1,
-            'MacOS': ua.indexOf('Macintosh') > -1,
-            'Windows': ua.indexOf('Windows') > -1,
-            'Linux': ua.indexOf('Linux') > -1 || ua.indexOf('X11') > -1,
             'ChromeOS': ua.indexOf('CrOS') > -1,
             'Ubuntu': ua.indexOf('Ubuntu') > -1,
+            'Android': ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1,
+            'MacOS': ua.indexOf('Macintosh') > -1,
+            'Linux': ua.indexOf('Linux') > -1 || ua.indexOf('X11') > -1,
+            'Windows': ua.indexOf('Windows') > -1,
         };
 
         this.browser = {
-            'Safari': ua.indexOf('Safari') > -1,
-            'Chrome': ua.indexOf('Chrome') > -1 || ua.indexOf('CriOS') > -1,
-            'IE': ua.indexOf('MSIE') > -1 || ua.indexOf('Trident') > -1,
-            'Edge': ua.indexOf('Edge') > -1,
-            'Firefox': ua.indexOf('Firefox') > -1 || ua.indexOf('FxiOS') > -1,
-            'FirefoxFocus': ua.indexOf('Focus') > -1,
-            'Chromium': ua.indexOf('Chromium') > -1,
-            'Opera': ua.indexOf('Opera') > -1 || ua.indexOf('OPR') > -1,
-            'UC': ua.indexOf('UC') > -1 || ua.indexOf(' UBrowser') > -1,
-            'QQBrowser': ua.indexOf('QQBrowser') > -1,
-            'QQ': ua.indexOf('QQ/') > -1,
-            'XiaoMi': ua.indexOf('MiuiBrowser') > -1,
-            'Wechat': ua.indexOf('MicroMessenger') > -1,
-            'WechatWork': ua.indexOf('wxwork/') > -1,
-            'Taobao': ua.indexOf('AliApp(TB') > -1,
-            'Alipay': ua.indexOf('AliApp(AP') > -1,
-            'Weibo': ua.indexOf('Weibo') > -1,
             'iQiYi': ua.indexOf('IqiyiApp') > -1,
+            'Weibo': ua.indexOf('Weibo') > -1,
+            'Alipay': ua.indexOf('AliApp(AP') > -1,
+            'Taobao': ua.indexOf('AliApp(TB') > -1,
+            'WechatWork': ua.indexOf('wxwork/') > -1,
+            'Wechat': ua.indexOf('MicroMessenger') > -1,
+            'XiaoMi': ua.indexOf('MiuiBrowser') > -1,
+            'QQ': ua.indexOf('QQ/') > -1,
+            'QQBrowser': ua.indexOf('QQBrowser') > -1,
+            'UC': ua.indexOf('UC') > -1 || ua.indexOf(' UBrowser') > -1,
+            'Opera': ua.indexOf('Opera') > -1 || ua.indexOf('OPR') > -1,
+            'Chromium': ua.indexOf('Chromium') > -1,
+            'FirefoxFocus': ua.indexOf('Focus') > -1,
+            'Firefox': ua.indexOf('Firefox') > -1 || ua.indexOf('FxiOS') > -1,
+            'Edge': ua.indexOf('Edge') > -1,
+            'IE': ua.indexOf('MSIE') > -1 || ua.indexOf('Trident') > -1,
+            'Chrome': ua.indexOf('Chrome') > -1 || ua.indexOf('CriOS') > -1,
+            'Safari': ua.indexOf('Safari') > -1,
         };
     }
 
@@ -53,7 +53,7 @@ class Client {
      * @returns {ClientInfo}
      * @memberof Client
      */
-    getClientInfo(): ClientInfo{
+    getClientInfo(): ClientInfo {
         return {
             useragent: this.ua,
             ...this.getOsInfo(),
@@ -102,8 +102,9 @@ class Client {
         Object.keys(this[type]).some((i) => {
             if (this[type][i]) {
                 key = i;
+                return true;
             }
-            return this[type];
+            return false;
         });
         return key;
     }
@@ -215,10 +216,10 @@ class Client {
             'Debian': function () {
                 return ua.replace(/^.*Debian\/([\d.]+).*$/, '$1');
             },
-            'Windows Phone': function () {
+            'WindowsPhone': function () {
                 return ua.replace(/^.*Windows Phone( OS)? ([\d.]+);.*$/, '$2');
             },
-            'Mac OS': function () {
+            'MacOS': function () {
                 return ua.replace(/^.*Mac OS X ([\d_]+).*$/, '$1').replace(/_/g, '.');
             },
             'WebOS': function () {
@@ -237,12 +238,13 @@ class Client {
         };
     }
 
-    static getInstance() {
-        if (!this.instance) {
-            this.instance = new Client();
-        }
-        return this.instance;
-    }
+    // static getInstance() {
+    //     if (!this.instance) {
+    //         this.instance = new Client();
+    //     }
+    //     return this.instance;
+    // }
 }
 
-export default Client.getInstance();
+// export default Client.getInstance();
+export default Client;

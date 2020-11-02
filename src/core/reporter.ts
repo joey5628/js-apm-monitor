@@ -1,7 +1,7 @@
 /*
  * @Author: Joey
  * @Date: 2020-09-03 10:59:02
- * @LastEditTime: 2020-09-29 14:49:44
+ * @LastEditTime: 2020-11-02 18:40:11
  * @Description: 
  * @FilePath: /js-apm-monitor/src/core/reporter.ts
  */
@@ -9,6 +9,7 @@ import { Options, LogData } from './types';
 import * as storage from './storage';
 import { isArray, calcJsonSize } from './utils';
 import request from './request';
+import getClientInstance from '../core/clientInstance';
 
 class Reporter {
     static instance: Reporter | null;
@@ -64,6 +65,8 @@ class Reporter {
         const url = options.url || '';
         if (params && !isArray(params)) {
             params = [params as LogData];
+            const clientInfo = getClientInstance().getClientInfo();
+            params = Object.assign(clientInfo, params);
         }
         return request.post(url, params)
             .then(() => {
